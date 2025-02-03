@@ -95,7 +95,7 @@ git reset --hard 1218d59a5aa9573a6c07b4c7cbe6047cbed461cf^C
 git push --force
 ```
 
-### 9. Install VueFire
+### 9. [Install VueFire](https://github.com/Laboratorynotices/Netlify_VueFire_SSR/tree/b5889f5ba15feda9aab6a290bf20a745bdb7c179)
 
 Install necessary dependencies:
 
