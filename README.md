@@ -42,7 +42,6 @@ This project is an experiment to investigate issues encountered when setting up 
    from = "/*"
    to = "/index.html"
    status = 200
-   ``
    ```
 
 5. **Deploy the Application**
