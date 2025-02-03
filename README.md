@@ -28,7 +28,7 @@ npx nuxi init . --package-manager npm --force --no-telemetry --no-git-init
 
 Follow the official Netlify guide: [Getting Started with Netlify](https://docs.netlify.com/get-started/).
 
-### 4. Enable SSR
+### 4. [Enable SSR](https://github.com/Laboratorynotices/Netlify_VueFire_SSR/tree/bff592c73e5c1bf9ab2f6ad4e048c7bf4ee46684)
 
 Modify `nuxt.config.ts` to enable SSR:
 
@@ -39,7 +39,7 @@ export default defineNuxtConfig({
 });
 ```
 
-### 7. First SSR Request
+### 5. First SSR Request
 
 Create the file `server/api/hello.ts`:
 
