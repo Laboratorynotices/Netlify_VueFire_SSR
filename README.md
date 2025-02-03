@@ -39,7 +39,7 @@ export default defineNuxtConfig({
 });
 ```
 
-### 5. First SSR Request
+### 5. [First SSR Request](https://github.com/Laboratorynotices/Netlify_VueFire_SSR/tree/421f00dac2c7eafcc5faf43a67e88f9d9c123419)
 
 Create the file `server/api/hello.ts`:
 
@@ -63,7 +63,7 @@ In `app.vue`, add the following code to fetch and display the data:
 </template>
 ```
 
-### 8. Firebase Admin SDK Setup
+### 6. Firebase Admin SDK Setup
 
 - Download the secret key from [Firebase Console](https://console.firebase.google.com/).
 - Rename the downloaded file to `service-account.json` and place it in the project root.
