@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is an experiment to investigate issues encountered when setting up a Nuxt 3 application with VueFire while enabling Server-Side Rendering (SSR) in Netlify. The goal is to identify the root cause of the problem and find a working solution.
+This project is an experiment to investigate issues encountered when setting up a Nuxt 3 application with VueFire while enabling Server-Side Rendering (SSR) in Netlify. The goal is to identify the root cause of potential problems and find a working solution.
 
 ## Expected Challenges
 
@@ -10,95 +10,76 @@ This project is an experiment to investigate issues encountered when setting up 
 
 ## Experiment Steps
 
-1. **Update Package Manager and Dependencies**
+### 1. Update Package Manager and Dependencies
 
-   ```bash
-   sudo npm install -g npm@latest nuxi@latest
-   ```
+Ensure you have the latest versions of npm and nuxi installed:
 
-2. **Initialize Nuxt 3 Project**
+```bash
+sudo npm install -g npm@latest nuxi@latest
+```
 
-   ```bash
-   npx nuxi init . --package-manager npm --force --no-telemetry --no-git-init
-   ```
+### 2. [Initialize Nuxt 3 Project](https://github.com/Laboratorynotices/Netlify_VueFire_SSR/tree/f7b7472e5fce4fcfad22c4e1642aa0a157b7d09e)
 
-3. **Add Netlify Integration**
+```bash
+npx nuxi init . --package-manager npm --force --no-telemetry --no-git-init
+```
 
-   ```bash
-   npm install -D @netlify/functions
-   ```
+### 3. Deploy the Project to Netlify
 
-4. **Configure Netlify**
+Follow the official Netlify guide: [Getting Started with Netlify](https://docs.netlify.com/get-started/).
 
-   Create a `netlify.toml` file in the project root:
+### 4. Enable SSR
 
-   ```toml
-   [build]
-   command = "npm run build"
-   functions = "netlify/functions"
-   publish = ".output/public"
+Modify `nuxt.config.ts` to enable SSR:
 
-   [[redirects]]
-   from = "/*"
-   to = "/index.html"
-   status = 200
-   ```
+```typescript
+export default defineNuxtConfig({
+  ssr: true,
+  // Other configuration options...
+});
+```
 
-5. **Deploy the Application**
+### 7. First SSR Request
 
-   ```bash
-   netlify deploy --prod
-   ```
+Create the file `server/api/hello.ts`:
 
-   > Note: Initial deployment may take several minutes before the application becomes accessible at its new URL.
+```typescript
+export default defineEventHandler((event) => {
+  return {
+    hello: "world",
+  };
+});
+```
 
-6. **Enable SSR**
+In `app.vue`, add the following code to fetch and display the data:
 
-   ```typescript
-   export default defineNuxtConfig({
-     ssr: true,
-     // Other configuration options...
-   });
-   ```
+```html
+<script setup lang="ts">
+  const { data } = await useFetch("/api/hello");
+</script>
 
-7. **First SSR Request**
+<template>
+  <pre>{{ data }}</pre>
+</template>
+```
 
-   Create the file `server/api/hello.ts`:
+### 8. Firebase Admin SDK Setup
 
-   ```typescript
-   export default defineEventHandler((event) => {
-     return {
-       hello: "world",
-     };
-   });
-   ```
+- Download the secret key from [Firebase Console](https://console.firebase.google.com/).
+- Rename the downloaded file to `service-account.json` and place it in the project root.
+- Add `service-account.json` to `.gitignore` to prevent accidental commits.
 
-   In `app.vue`, add the following code to fetch and display the data:
+### 9. Install VueFire
 
-   ```html
-   <script setup lang="ts">
-     const { data } = await useFetch("/api/hello");
-   </script>
-   <template>
-     <pre>{{ data }}</pre>
-   </template>
-   ```
+Install necessary dependencies:
 
-8. **Firebase Admin SDK**
+```bash
+npm install firebase
+npx nuxi@latest module add vuefire
+npm install firebase-admin firebase-functions @firebase/app-types
+```
 
-   - Download the secret key from [Firebase Console](https://console.firebase.google.com/).
-   - Rename the downloaded file to `service-account.json` and place it in the project root.
-   - Add `service-account.json` to `.gitignore`.
-
-9. **Install VueFire**
-
-   ```bash
-   npm install firebase
-   npx nuxi@latest module add vuefire
-   npm install firebase-admin firebase-functions @firebase/app-types
-   ```
-
-10. **Configure VueFire**
+### 10. Configure VueFire
 
 Update `nuxt.config.ts`:
 
@@ -116,7 +97,7 @@ export default defineNuxtConfig({
 });
 ```
 
-Add the following to `.env`:
+Add Firebase credentials to the `.env` file:
 
 ```
 GOOGLE_FIREBASE_CONFIG_API_KEY="..."
